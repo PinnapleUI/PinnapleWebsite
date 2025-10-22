@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - PinnapleUI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 217, 61, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 60%, rgba(107, 207, 127, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            z-index: 1;
+            position: relative;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #222;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFD93D 0%, #6BCF7F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .back-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #FFD93D;
+        }
+        
+        .settings-section {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .settings-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .settings-section .subtitle {
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #FFD93D;
+            box-shadow: 0 0 0 3px rgba(255, 217, 61, 0.1);
+        }
+        
+        input::placeholder {
+            color: #555;
+        }
+        
+        input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background: #FFD93D;
+            color: #0a0a0a;
+        }
+        
+        .btn-primary:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 217, 61, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #333;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #FFD93D;
+            background: rgba(255, 217, 61, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: transparent;
+            color: #ff6b9d;
+            border: 2px solid #ff6b9d;
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 107, 157, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .success-message {
+            background: rgba(107, 207, 127, 0.1);
+            border: 1px solid #6BCF7F;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+            color: #6BCF7F;
+            display: none;
+        }
+        
+        .error-message {
+            background: rgba(255, 107, 157, 0.1);
+            border: 1px solid #ff6b9d;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+            color: #ff6b9d;
+            display: none;
+        }
+        
+        .user-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD93D 0%, #6BCF7F 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #0a0a0a;
+            margin: 0 auto 20px;
+        }
+        
+        .profile-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            color: #888;
+            font-size: 0.95rem;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .danger-zone {
+            border-color: #ff6b9d;
+        }
+        
+        .danger-zone h2 {
+            color: #ff6b9d;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .button-group .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Settings</h1>
+            <a href="index.html" class="back-link">← Back to home</a>
+        </div>
+        
+        <!-- Profile Section -->
+        <div class="settings-section">
+            <h2>Profile</h2>
+            <p class="subtitle">Manage your account information</p>
+            
+            <div class="profile-info">
+                <div class="user-avatar-large" id="profile-avatar">U</div>
+                <h3 id="profile-username">Username</h3>
+                <p id="profile-email">email@example.com</p>
+            </div>
+            
+            <div id="profile-success" class="success-message">
+                Profile updated successfully!
+            </div>
+            
+            <div id="profile-error" class="error-message">
+                Failed to update profile.
+            </div>
+            
+            <form id="profile-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        placeholder="Your username"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="you@example.com"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+        
+        <!-- Password Section -->
+        <div class="settings-section">
+            <h2>Change Password</h2>
+            <p class="subtitle">Update your password to keep your account secure</p>
+            
+            <div id="password-success" class="success-message">
+                Password changed successfully!
+            </div>
+            
+            <div id="password-error" class="error-message">
+                Failed to change password.
+            </div>
+            
+            <form id="password-form">
+                <div class="form-group">
+                    <label for="current-password">Current Password</label>
+                    <input 
+                        type="password" 
+                        id="current-password" 
+                        name="current-password" 
+                        placeholder="••••••••"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="new-password">New Password</label>
+                    <input 
+                        type="password" 
+                        id="new-password" 
+                        name="new-password" 
+                        placeholder="••••••••"
+                        required
+                        minlength="8"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password">Confirm New Password</label>
+                    <input 
+                        type="password" 
+                        id="confirm-password" 
+                        name="confirm-password" 
+                        placeholder="••••••••"
+                        required
+                        minlength="8"
+                    >
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+        </div>
+        
+        <!-- Danger Zone -->
+        <div class="settings-section danger-zone">
+            <h2>Danger Zone</h2>
+            <p class="subtitle">Irreversible actions - proceed with caution</p>
+            
+            <div class="button-group">
+                <button type="button" class="btn btn-danger" id="delete-account-btn">Delete Account</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        
+        // Check if user is logged in
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+        
+        if (!user) {
+            // Redirect to signin if not logged in
+            window.location.href = 'signin.html';
+        } else {
+            // Populate profile information
+            document.getElementById('profile-username').textContent = user.username;
+            document.getElementById('profile-email').textContent = user.email;
+            document.getElementById('profile-avatar').textContent = user.username.charAt(0).toUpperCase();
+            document.getElementById('username').value = user.username;
+            document.getElementById('email').value = user.email;
+        }
+        
+        // Profile form submission
+        document.getElementById('profile-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/update-profile`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        userId: user.id,
+                        username, 
+                        email 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update localStorage
+                    user.username = username;
+                    user.email = email;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    
+                    // Update display
+                    document.getElementById('profile-username').textContent = username;
+                    document.getElementById('profile-email').textContent = email;
+                    document.getElementById('profile-avatar').textContent = username.charAt(0).toUpperCase();
+                    
+                    document.getElementById('profile-success').style.display = 'block';
+                    document.getElementById('profile-error').style.display = 'none';
+                    
+                    setTimeout(() => {
+                        document.getElementById('profile-success').style.display = 'none';
+                    }, 5000);
+                } else {
+                    document.getElementById('profile-error').textContent = data.error;
+                    document.getElementById('profile-error').style.display = 'block';
+                    document.getElementById('profile-success').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('profile-error').textContent = 'Failed to connect to server. Please try again.';
+                document.getElementById('profile-error').style.display = 'block';
+            }
+        });
+        
+        // Password form submission
+        document.getElementById('password-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (newPassword !== confirmPassword) {
+                document.getElementById('password-error').textContent = 'New passwords do not match';
+                document.getElementById('password-error').style.display = 'block';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/change-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        userId: user.id,
+                        currentPassword,
+                        newPassword
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('password-success').style.display = 'block';
+                    document.getElementById('password-error').style.display = 'none';
+                    this.reset();
+                    
+                    setTimeout(() => {
+                        document.getElementById('password-success').style.display = 'none';
+                    }, 5000);
+                } else {
+                    document.getElementById('password-error').textContent = data.error;
+                    document.getElementById('password-error').style.display = 'block';
+                    document.getElementById('password-success').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('password-error').textContent = 'Failed to connect to server. Please try again.';
+                document.getElementById('password-error').style.display = 'block';
+            }
+        });
+        
+        // Delete account
+        document.getElementById('delete-account-btn').addEventListener('click', async function() {
+            const confirmed = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+            
+            if (!confirmed) return;
+            
+            const doubleConfirm = confirm('This will permanently delete all your data. Are you absolutely sure?');
+            
+            if (!doubleConfirm) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/delete-account`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ userId: user.id })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    localStorage.removeItem('user');
+                    alert('Your account has been deleted.');
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Failed to delete account: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to connect to server. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

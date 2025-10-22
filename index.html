@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PinnapleUI - Modern C++ GUI Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 217, 61, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(107, 207, 127, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 1000px;
+            padding: 40px 20px;
+        }
+        
+        .mascot-container {
+            margin-bottom: 40px;
+        }
+        
+        .mascot-container img {
+            width: 180px;
+            height: 180px;
+            filter: drop-shadow(0 20px 60px rgba(255, 217, 61, 0.3));
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFD93D 0%, #6BCF7F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+        
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #888;
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+        
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+        
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #FFD93D;
+            color: #0a0a0a;
+        }
+        
+        .btn-primary:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(255, 217, 61, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #333;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #FFD93D;
+            background: rgba(255, 217, 61, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .stats {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #FFD93D;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        section {
+            padding: 120px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            color: #888;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s;
+        }
+        
+        .feature:hover {
+            border-color: #FFD93D;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 24px;
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        
+        .feature p {
+            color: #888;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .code-section {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 60px;
+            margin: 80px 0;
+        }
+        
+        .code-section h3 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        pre {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 30px;
+            overflow-x: auto;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        
+        code {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            color: #6BCF7F;
+        }
+        
+        .keyword { color: #FFD93D; }
+        .function { color: #6BCF7F; }
+        .string { color: #ff6b9d; }
+        .comment { color: #555; }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .comparison-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 40px;
+        }
+        
+        .comparison-card h4 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+        
+        .comparison-card.winner {
+            border-color: #FFD93D;
+            background: rgba(255, 217, 61, 0.05);
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 12px 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .cross-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            opacity: 0.3;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            border-top: 1px solid #222;
+            color: #666;
+        }
+        
+        footer p {
+            margin: 10px 0;
+        }
+        
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 20px 40px;
+            z-index: 100;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nav-bar .btn {
+            padding: 12px 24px;
+            font-size: 0.95rem;
+        }
+        
+        .user-menu {
+            position: relative;
+            display: none;
+        }
+        
+        .user-menu.active {
+            display: block;
+        }
+        
+        .user-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        .user-button:hover {
+            border-color: #FFD93D;
+            background: rgba(255, 217, 61, 0.05);
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD93D 0%, #6BCF7F 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #0a0a0a;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 10px;
+            min-width: 200px;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+        }
+        
+        .dropdown-item {
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #222;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-item:hover {
+            background: rgba(255, 217, 61, 0.1);
+            color: #FFD93D;
+        }
+        
+        .dropdown-item.logout {
+            color: #ff6b9d;
+        }
+        
+        .dropdown-item.logout:hover {
+            background: rgba(255, 107, 157, 0.1);
+            color: #ff6b9d;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                gap: 40px;
+            }
+            
+            .nav-bar {
+                padding: 15px 20px;
+            }
+            
+            .nav-bar .btn {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <div id="auth-buttons">
+            <a href="signin.html" class="btn btn-secondary">Sign In</a>
+            <a href="signup.html" class="btn btn-primary">Sign Up</a>
+        </div>
+        <div id="user-menu" class="user-menu">
+            <button class="user-button" id="user-button">
+                <div class="user-avatar" id="user-avatar">U</div>
+                <span id="user-name">User</span>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="settings.html" class="dropdown-item">Account</a>
+                <a href="settings.html" class="dropdown-item">Settings</a>
+                <a href="#" class="dropdown-item logout" id="logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hero">
+        <div class="hero-content">
+            <div class="mascot-container">
+                <img src="mascot.svg" alt="PinnapleUI">
+            </div>
+            <h1>PinnapleUI</h1>
+            <p class="subtitle">The modern C++ GUI framework that doesn't suck</p>
+            <div class="cta-group">
+                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="api.html" class="btn btn-secondary">Documentation</a>
+                <a href="about.html" class="btn btn-secondary">About</a>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">10x</span>
+                    <span class="stat-label">Easier</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">OpenGL</span>
+                    <span class="stat-label">Powered</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">C++</span>
+                    <span class="stat-label">Native</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="section-header">
+            <h2>Why PinnapleUI?</h2>
+            <p>Modern GUI development for C++</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="#FFD93D" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <h3>Modern Design</h3>
+                <p>Built for 2025. Sleek, beautiful interfaces that users actually want to interact with.</p>
+            </div>
+            
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="#6BCF7F" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+                <h3>Blazing Fast</h3>
+                <p>OpenGL-powered rendering.</p>
+            </div>
+            
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="#FFD93D" stroke-width="2">
+                    <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+                </svg>
+                <h3>Clean API</h3>
+                <p>Intuitive function calls. Write less code, build more features.</p>
+            </div>
+            
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="#6BCF7F" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                <h3>Smart Layouts</h3>
+                <p>Flexbox-inspired system. No more manual positioning hell.</p>
+            </div>
+            
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="#FFD93D" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                </svg>
+                <h3>Zero Dependencies</h3>
+                <p>Pure C++. No bloat, no external libraries to manage.</p>
+            </div>
+            
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="#6BCF7F" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <h3>Production Ready</h3>
+                <p>Used in real applications. Battle-tested and reliable.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="code-section">
+            <h3>See the Difference</h3>
+            <pre><code><span class="comment">// Create a beautiful window in seconds</span>
+<span class="keyword">PUI</span>::<span class="function">Begin</span>(<span class="string">"My Application"</span>);
+
+    <span class="keyword">if</span> (<span class="keyword">PUI</span>::<span class="function">Button</span>(<span class="string">"Click Me"</span>)) {
+        <span class="comment">// Handle click</span>
+    }
+    
+    <span class="keyword">PUI</span>::<span class="function">Text</span>(<span class="string">"Welcome to PinnapleUI"</span>);
+    <span class="keyword">PUI</span>::<span class="function">InputText</span>(<span class="string">"Username"</span>, &username);
+    <span class="keyword">PUI</span>::<span class="function">Slider</span>(<span class="string">"Volume"</span>, &volume, 0, 100);
+
+<span class="keyword">PUI</span>::<span class="function">End</span>();
+
+<span class="comment">// That's it. Modern, fast, beautiful.</span></code></pre>
+        </div>
+    </section>
+
+
+
+    <footer>
+        <p>Built with passion by the PinnapleUI community</p>
+        <p>Open source • MIT Licensed</p>
+        <p>Made possible by OpenGL and C++</p>
+    </footer>
+    
+    <script>
+        // Check if user is logged in
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+        
+        if (user) {
+            // Show user menu
+            document.getElementById('auth-buttons').style.display = 'none';
+            document.getElementById('user-menu').classList.add('active');
+            document.getElementById('user-name').textContent = user.username;
+            document.getElementById('user-avatar').textContent = user.username.charAt(0).toUpperCase();
+        }
+        
+        // Toggle dropdown menu
+        document.getElementById('user-button')?.addEventListener('click', function() {
+            document.getElementById('dropdown-menu').classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-menu')) {
+                document.getElementById('dropdown-menu')?.classList.remove('show');
+            }
+        });
+        
+        // Logout functionality
+        document.getElementById('logout-btn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('user');
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>

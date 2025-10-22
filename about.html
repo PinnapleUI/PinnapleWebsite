@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - PinnapleUI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        nav {
+            background: #111;
+            padding: 1rem 2rem;
+            border-bottom: 2px solid #FFD93D;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            color: #FFD93D;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        nav h1 img {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #FFD93D;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .hero img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 10px 30px rgba(255, 217, 61, 0.3));
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #FFD93D;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            margin: 3rem 0;
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #FFD93D;
+        }
+
+        .section h2 {
+            color: #FFD93D;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section h3 {
+            color: #6BCF7F;
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section p {
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .section ul {
+            color: #ccc;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .mascot-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a1a1a 100%);
+            border-left: 4px solid #6BCF7F;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: #0a0a0a;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #FFD93D;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #FFD93D;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #FFD93D;
+            border: 3px solid #0a0a0a;
+        }
+
+        .timeline-item h4 {
+            color: #FFD93D;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .quote {
+            background: #0a0a0a;
+            border-left: 4px solid #6BCF7F;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #aaa;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-badge {
+            background: #0a0a0a;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid #FFD93D;
+            color: #FFD93D;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #111;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid #FFD93D;
+        }
+
+        footer p {
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>
+                <img src="mascot.svg" alt="Pine">
+                PinnapleUI
+            </h1>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="api.html">API Docs</a>
+                <a href="about.html">About</a>
+                <a href="https://github.com/yourusername/pinnapleui">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <img src="mascot.svg" alt="Pine the Builder">
+        <h1>About PinnapleUI</h1>
+        <p>The story behind the framework that doesn't suck</p>
+    </div>
+
+    <div class="container">
+        <!-- Project Story -->
+        <div class="section">
+            <h2>The Project</h2>
+            <p>
+                PinnapleUI was born out of frustration with existing C++ GUI frameworks. Too many dependencies, 
+                complicated build systems, bloated APIs, and outdated rendering. We wanted something different—something 
+                that actually <strong>doesn't suck</strong>.
+            </p>
+            <p>
+                Built from the ground up with modern C++ and OpenGL, PinnapleUI focuses on simplicity, performance, 
+                and developer experience. No external dependencies (except one tiny header file), no complicated setup, 
+                just pure, fast, beautiful UI rendering.
+            </p>
+
+            <h3>Design Philosophy</h3>
+            <ul>
+                <li><strong>Zero Bloat</strong> - Only what you need, nothing more</li>
+                <li><strong>Immediate Mode</strong> - Simple, predictable API that just works</li>
+                <li><strong>Native Performance</strong> - Direct Win32 + OpenGL, no middleware</li>
+                <li><strong>Beautiful by Default</strong> - Modern dark theme with smooth rendering</li>
+                <li><strong>Developer First</strong> - API designed for humans, not machines</li>
+            </ul>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="number">2</span>
+                    <span class="label">Core Files</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">0</span>
+                    <span class="label">External Dependencies</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">1</span>
+                    <span class="label">Build Command</span>
+                </div>
+                <div class="stat-card">
+                    <span class="number">∞</span>
+                    <span class="label">Possibilities</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="section">
+            <h2>Technology Stack</h2>
+            <p>
+                PinnapleUI is built with carefully chosen technologies that prioritize performance and simplicity:
+            </p>
+
+            <div class="tech-stack">
+                <span class="tech-badge">C++17</span>
+                <span class="tech-badge">Win32 API</span>
+                <span class="tech-badge">OpenGL</span>
+                <span class="tech-badge">stb_truetype</span>
+                <span class="tech-badge">Immediate Mode GUI</span>
+            </div>
+
+            <h3>Why These Choices?</h3>
+            <p>
+                <strong>Win32 + OpenGL:</strong> Direct access to the OS and GPU means zero overhead. No abstraction layers, 
+                no middleware, just pure performance.
+            </p>
+            <p>
+                <strong>stb_truetype:</strong> A single-header library for beautiful TTF font rendering. No FreeType, 
+                no HarfBuzz, no complexity. Just crisp, antialiased text.
+            </p>
+            <p>
+                <strong>Immediate Mode:</strong> Your UI code reads like a story. No state management, no callbacks, 
+                no event systems. Just straightforward, predictable code.
+            </p>
+        </div>
+
+        <!-- Development Timeline -->
+        <div class="section">
+            <h2>Development Journey</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Day 1: The Foundation</h4>
+                    <p>Win32 window creation, OpenGL context setup, basic rendering pipeline established.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Day 1: Widget System</h4>
+                    <p>Buttons, text, input fields, checkboxes, and sliders implemented with immediate-mode API.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Day 1: The Text Rendering Saga</h4>
+                    <p>Multiple iterations to get crisp, beautiful text. From GDI to stb_truetype with proper antialiasing.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Day 1: Polish & Scale</h4>
+                    <p>UI scaling API, font loading, style system, and final touches for v1.0 release.</p>
+                </div>
+            </div>
+
+            <div class="quote">
+                "The best code is the code you don't have to write. PinnapleUI gives you powerful UI with minimal effort."
+            </div>
+        </div>
+
+        <!-- Meet Pine -->
+        <div class="section mascot-section">
+            <h2>Meet Pine the Builder <img src="mascot.svg" alt="Pine" style="width: 32px; height: 32px; vertical-align: middle;"></h2>
+            <p>
+                Every great framework needs a mascot, and ours is <strong>Pine the Builder</strong>—a cheerful 
+                pineapple who represents everything PinnapleUI stands for.
+            </p>
+            
+            <div style="text-align: center; margin: 3rem 0;">
+                <img src="mascot.svg" alt="Pine the Builder" style="width: 250px; height: 250px; filter: drop-shadow(0 20px 60px rgba(255, 217, 61, 0.4));">
+            </div>
+
+            <h3>Why a Pineapple?</h3>
+            <ul>
+                <li><strong>Unique & Memorable</strong> - Just like our framework, Pine stands out from the crowd</li>
+                <li><strong>Sweet & Friendly</strong> - Our API is approachable and easy to use</li>
+                <li><strong>Tough Outside, Soft Inside</strong> - Robust performance with a gentle learning curve</li>
+                <li><strong>Tropical Vibes</strong> - Because coding should be fun, not painful</li>
+            </ul>
+
+            <h3>Pine's Creation</h3>
+            <p>
+                Pine was designed to be simple yet expressive—a minimalist pineapple with a friendly face. 
+                The yellow and green color scheme matches our framework's visual identity, and the geometric 
+                style reflects our clean, modern approach to GUI development.
+            </p>
+            <p>
+                Pine appears throughout our documentation, website, and examples, always ready to help you 
+                build amazing user interfaces. He's not just a mascot—he's your coding companion!
+            </p>
+        </div>
+
+        <!-- Future Plans -->
+        <div class="section">
+            <h2>What's Next?</h2>
+            <p>
+                PinnapleUI v1.0 is just the beginning. Here's what we're planning for future releases:
+            </p>
+
+            <h3>Upcoming Features</h3>
+            <ul>
+                <li>More widgets (dropdowns, tabs, color pickers, tree views)</li>
+                <li>Advanced layout system with constraints</li>
+                <li>Theme system with multiple built-in themes</li>
+                <li>Image loading and rendering</li>
+                <li>Docking and window management</li>
+                <li>Cross-platform support (Linux, macOS)</li>
+                <li>Comprehensive example gallery</li>
+            </ul>
+
+            <h3>Community</h3>
+            <p>
+                PinnapleUI is open source and we welcome contributions! Whether it's bug reports, feature requests, 
+                or pull requests, we'd love to hear from you. Join our growing community of developers who believe 
+                GUI frameworks shouldn't suck.
+            </p>
+        </div>
+
+        <!-- Creator -->
+        <div class="section">
+            <h2>About the Creator</h2>
+            <p>
+                PinnapleUI was created by <strong>Darian Jones</strong>, a developer passionate about C++, Python, 
+                and web technologies (HTML, CSS, JavaScript).
+            </p>
+            <p>
+                Darian started learning C++ after hearing it was a great language to master, and that journey led 
+                to the creation of PinnapleUI—a framework that combines the power of C++ with the simplicity 
+                developers deserve.
+            </p>
+            <p>
+                When not coding, Darian enjoys trying new foods (except dairy—Pine the Builder understands) and 
+                exploring the intersection of native and web technologies.
+            </p>
+            
+            <div class="quote">
+                "I wanted to build something that made C++ GUI development actually enjoyable. If it helps even 
+                one developer avoid the pain I went through with other frameworks, it's worth it." - Darian Jones
+            </div>
+        </div>
+
+        <!-- Credits -->
+        <div class="section">
+            <h2>Credits & Thanks</h2>
+            <p>
+                PinnapleUI wouldn't exist without these amazing projects and people:
+            </p>
+            <ul>
+                <li><strong>stb_truetype</strong> by Sean Barrett - Beautiful font rendering made simple</li>
+                <li><strong>Dear ImGui</strong> - Inspiration for immediate-mode GUI design</li>
+                <li><strong>The C++ Community</strong> - For pushing the language forward</li>
+                <li><strong>You</strong> - For believing in frameworks that don't suck</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 PinnapleUI. Made with 💛 by developers who care about good UX.</p>
+        <p style="margin-top: 0.5rem; color: #666;">Pine the Builder approves this framework <img src="mascot.svg" alt="Pine" style="width: 20px; height: 20px; vertical-align: middle;"></p>
+    </footer>
+</body>
+</html>
